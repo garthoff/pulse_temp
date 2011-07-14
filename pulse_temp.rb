@@ -4,7 +4,13 @@ $:<< '../lib' << 'lib'
 require 'goliath'
 require 'goliath/plugins/latency'
 
-require 'json'
+require 'yajl'
+
+class Float
+  def bytesize
+    to_s.bytesize
+  end
+end
 
 
 class PulseTemp < Goliath::API
@@ -20,7 +26,7 @@ class PulseTemp < Goliath::API
     case (env[Goliath::Request::REQUEST_METHOD])
     when 'GET'
       temps = redis.lrange("recent_temps", 0, -1).map &:to_f
-      [200, {}, temps.to_json]
+      [200, {}, temps.first]
     when 'POST'
       temp = params[:current_temp].to_f
       if temp < 150
