@@ -26,7 +26,7 @@ class PulseTemp < Goliath::API
     case (env[Goliath::Request::REQUEST_METHOD])
     when 'GET'
       temps = redis.lrange("recent_temps", 0, -1).map &:to_f
-      [200, {}, temps.first]
+      [200, {}, {"temp" => temps.first}]
     when 'POST'
       temp = params[:current_temp].to_f
       if temp < 150
