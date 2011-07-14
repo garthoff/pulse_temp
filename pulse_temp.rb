@@ -15,7 +15,7 @@ end
 
 class PulseTemp < Goliath::API
   use Goliath::Rack::DefaultMimeType    # cleanup accepted media types
-  use Goliath::Rack::Render, 'json'     # auto-negotiate response format
+  use Goliath::Rack::Render, ['json', 'xml', 'html']
   use Goliath::Rack::Params             # parse & merge query and body parameters
   use Goliath::Rack::Heartbeat          # respond to /status with 200, OK (monitoring, etc)
 
